@@ -34,7 +34,7 @@ interface TaskState {
     setAction: (action?: string) => void
 }
 
-export const useTasksStore = create<TaskState>((set, get) => ({
+export const useTasksStore = create<TaskState>((set) => ({
     currentAction: "all",
     currentPage: 0,
     total: 0,
@@ -63,7 +63,7 @@ export const useTasksStore = create<TaskState>((set, get) => ({
 
             .catch(error => console.log(error))
         const storedFavoriteTasks = localStorage.getItem("favorites")
-        set((state) => ({
+        set(() => ({
             currentPage: page,
             favorites: storedFavoriteTasks ? JSON.parse(storedFavoriteTasks) : [],
         }))
@@ -79,7 +79,7 @@ export const useTasksStore = create<TaskState>((set, get) => ({
                 })
                 .then(response => {
                     //set((state) => ({ tasks: [...state.tasks, response.data.data] }))
-                    set((state) => ({ currentAction: "all" }))
+                    set(() => ({ currentAction: "all" }))
                     if (favorite) {
                         let temp = localStorage.favorites;
                         let favTasks = temp ? JSON.parse(temp) : []
@@ -90,16 +90,13 @@ export const useTasksStore = create<TaskState>((set, get) => ({
     },
 
     removeTask: async (id: number) => {
-        const data = {
-            id: id,
-        }
         axios
             .delete(`https://cms.dev-land.host/api/tasks/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
-            .then(response => {
+            .then(() => {
                 set((state) => ({ tasks: state.tasks.filter((task) => task.id !== id) }))
             })
             .catch(error => console.log(error))
@@ -117,7 +114,7 @@ export const useTasksStore = create<TaskState>((set, get) => ({
         const favorites = temp ? JSON.parse(temp) : []
         const updatedFavorites = check(id, favorites)
         localStorage.favorites = JSON.stringify(updatedFavorites)
-        set((state) => (
+        set(() => (
             {
                 favorites: updatedFavorites
             }))
@@ -147,6 +144,6 @@ export const useTasksStore = create<TaskState>((set, get) => ({
     },
 
     setAction(action) {
-        set((state) => ({ currentAction: action, currentPage: 0, tasks: [] as TaskModel[] }))
+        set(() => ({ currentAction: action, currentPage: 0, tasks: [] as TaskModel[] }))
     },
 }))
