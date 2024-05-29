@@ -39,7 +39,7 @@ const InfiniteList: React.FC<InfiniteListProps> = ({ typeParam }) => {
                 next={() => fetchTask(typeParam)}
                 hasMore={hasMore}
                 loader={<p>Загрузится...</p>}
-                endMessage={<p>Больше не данных.</p>}
+                endMessage={<p>Больше нет данных.</p>}
                 scrollableTarget="scrollableDiv"
             >
                 <Divider orientation="left">{type} Задачи</Divider>

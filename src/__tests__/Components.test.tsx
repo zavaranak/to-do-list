@@ -18,7 +18,13 @@ describe("NewTaskForm", () => {
 describe("ListInfinite", () => {
     test("renders", () => {
         render(<InfiniteList typeParam={"all"} />);
-        expect(screen.getByText(/Больше не данных./i)).toBeDefined();
+        expect(screen.getByText(/Больше нет данных./i)).toBeDefined();
+    });
+});
+describe("ListInfiniteFetch", () => {
+    test("renders", () => {
+        render(<InfiniteList typeParam={"all"} />);
+        expect(screen.getByText('Список задач (0)')).toBeDefined();
     });
 });
 
