@@ -24,7 +24,7 @@ describe("ListInfinite", () => {
 describe("ListInfiniteFetch", () => {
     test("renders", () => {
         render(<InfiniteList typeParam={"all"} />);
-        expect(screen.getByText('Список задач (0)')).toBeDefined();
+        expect(screen.getByText('Список задач')).toBeDefined();
     });
 });
 

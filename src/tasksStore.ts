@@ -42,7 +42,7 @@ export const useTasksStore = create<TaskState>((set) => ({
     favorites: [] as number[],
 
     fetchTasks: async (type?) => {
-        const size = 10;
+        const size = 4;
         let page = useTasksStore.getState().currentPage + 1
         axios
             .get(`https://cms.dev-land.host/api/tasks?pagination%5BwithCount%5D=true&pagination%5Bpage%5D=${page}&pagination%5BpageSize%5D=${size}`, {

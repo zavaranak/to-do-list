@@ -32,48 +32,46 @@ const InfiniteList: React.FC<InfiniteListProps> = ({ typeParam }) => {
         fetchTask(typeParam)
     }, [action])
     return (
-        <div id="scrollableDiv">
-            <h2 >Список задач ({tasks.length})</h2>
-            <InfiniteScroll
-                dataLength={tasks.length}
-                next={() => fetchTask(typeParam)}
-                hasMore={hasMore}
-                loader={<p>Загрузится...</p>}
-                endMessage={<p>Больше нет данных.</p>}
-                scrollableTarget="scrollableDiv"
-            >
-                <Divider orientation="left">{type} Задачи</Divider>
-                <List
-                    bordered
-                    dataSource={tasks}
-                    renderItem={(item) => (
-                        <div>
-                            <List.Item style={{ display: "block", justifyContent: "center", alignItems: "center" }}>
-                                <Typography.Text style={{ fontWeight: "700" }}> Задача:{item.attributes.title}</Typography.Text>
-                                <div><Typography.Text style={{ fontWeight: "400" }} >{item.attributes.description}</Typography.Text></div>
-                                <div style={{ width: "100%", justifyContent: "space-between" }}>
-                                    {item.attributes.status === TaskStatus.Active &&
-                                        <Button type="primary" style={buttonStyle} onClick={() => updateStatus(Number(item.id), TaskStatus.Completed)}> Выполнить
-                                        </Button>}
-                                    {item.attributes.status === TaskStatus.Completed &&
-                                        <Button style={buttonStyle} onClick={() => updateStatus(Number(item.id), TaskStatus.Active)}> Продолжать
-                                        </Button>}
-                                    {favoritesTasks.includes(Number(item.id)) &&
-                                        <Button type="dashed" style={buttonStyle} onClick={() => selectTask(Number(item.id))}> Убраить отметку
-                                        </Button>}
-                                    {!favoritesTasks.includes(Number(item.id)) &&
-                                        <Button type="primary" style={buttonStyle} onClick={() => selectTask(Number(item.id))}> Отметить
-                                        </Button>}
-                                    <Button style={buttonStyle} danger onClick={() => removeTask(Number(item.id))}> Удалить </Button>
+        <InfiniteScroll
+            dataLength={tasks.length}
+            next={() => fetchTask(typeParam)}
+            hasMore={hasMore}
+            loader={<p>Загрузится...</p>}
+            endMessage={<p>Больше нет данных.</p>}
+            height={"550px"}
+        >
+            <h2 >Список задач </h2>
+            <Divider orientation="left">{type} Задачи</Divider>
+            <List
+                bordered
+                dataSource={tasks}
+                renderItem={(item) => (
+                    <div>
+                        <List.Item style={{ display: "block", justifyContent: "center", alignItems: "center" }}>
+                            <Typography.Text style={{ fontWeight: "700" }}> Задача:{item.attributes.title}</Typography.Text>
+                            <div><Typography.Text style={{ fontWeight: "400" }} >{item.attributes.description}</Typography.Text></div>
+                            <div style={{ width: "100%", justifyContent: "space-between" }}>
+                                {item.attributes.status === TaskStatus.Active &&
+                                    <Button type="primary" style={buttonStyle} onClick={() => updateStatus(Number(item.id), TaskStatus.Completed)}> Выполнить
+                                    </Button>}
+                                {item.attributes.status === TaskStatus.Completed &&
+                                    <Button style={buttonStyle} onClick={() => updateStatus(Number(item.id), TaskStatus.Active)}> Продолжать
+                                    </Button>}
+                                {favoritesTasks.includes(Number(item.id)) &&
+                                    <Button type="dashed" style={buttonStyle} onClick={() => selectTask(Number(item.id))}> Убраить отметку
+                                    </Button>}
+                                {!favoritesTasks.includes(Number(item.id)) &&
+                                    <Button type="primary" style={buttonStyle} onClick={() => selectTask(Number(item.id))}> Отметить
+                                    </Button>}
+                                <Button style={buttonStyle} danger onClick={() => removeTask(Number(item.id))}> Удалить </Button>
 
-                                </div>
-                            </List.Item>
-                        </div>
-                    )
-                    }
-                />
-            </InfiniteScroll >
-        </div >)
+                            </div>
+                        </List.Item>
+                    </div>
+                )
+                }
+            />
+        </InfiniteScroll >)
 }
 
 export default InfiniteList
